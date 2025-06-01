@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Music</title>
+    <meta name="description" content="一个使用原生JavaScript开发的音乐播放器">
+    <link rel="stylesheet" href="css/index_styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧播放列表 -->
+        <div class="playlist-section">
+            <div class="playlist-header">
+                <h2>我的音乐</h2>
+                <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="上传音频文件">
+                    <div class="upload-text">
+                        点击或拖拽音频文件到这里<br>
+                        支持 MP3, WAV, OGG 格式
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="audio/*" aria-label="选择音频文件">
+                </div>
+            </div>
+            <div class="playlist" id="playlist" role="list" aria-label="播放列表">
+                <!-- 播放列表项将在这里动态生成 -->
+            </div>
+        </div>
+
+        <!-- 右侧主播放区域 -->
+        <div class="player-section">
+            <div class="current-track-info" id="currentTrackInfo">
+                <div class="empty-state">
+                    <h3>🎵</h3>
+                    <p>选择一首歌曲开始播放</p>
+                </div>
+            </div>
+
+            <div class="player-controls" id="playerControls" style="display: none;">
+                <!-- 进度条 -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" role="progressbar" aria-label="播放进度" tabindex="0">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime" aria-label="当前时间">0:00</span>
+                        <span id="totalTime" aria-label="总时长">0:00</span>
+                    </div>
+                </div>
+
+                <!-- 播放控制按钮 -->
+                <div class="control-buttons">
+                    <button class="control-btn" id="prevBtn" title="上一首 (←)" aria-label="上一首">⏮</button>
+                    <button class="control-btn play-btn" id="playBtn" title="播放/暂停 (空格)" aria-label="播放">▶</button>
+                    <button class="control-btn" id="nextBtn" title="下一首 (→)" aria-label="下一首">⏭</button>
+                </div>
+
+                <!-- 音量控制 -->
+                <div class="volume-control">
+                    <span class="volume-icon" id="volumeIcon" title="音量" aria-label="音量图标">🔊</span>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" 
+                           title="音量控制 (↑↓)" aria-label="音量滑块">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隐藏的音频元素 -->
+    <audio id="audioPlayer" preload="metadata" aria-hidden="true"></audio>
+
+    <!-- JavaScript -->
+    <script src="js/audio/music_player.js"></script>
+    
+    <!-- 错误处理 -->
+    <script>
+        window.addEventListener('error', function(e) {
+            console.error('页面错误:', e.error);
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('未处理的Promise错误:', e.reason);
+        });
+    </script>
+</body>
+</html>
